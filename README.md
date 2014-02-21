@@ -1,5 +1,5 @@
-# ITGController
-## A tool for remotely controlling ITGSend running in daemon mode
+## ITGController
+### A tool for remotely controlling ITGSend running in daemon mode
 Makes use of the D-ITG C++ API under Java using [JNA](https://github.com/twall/jna)
 
 ### Build
