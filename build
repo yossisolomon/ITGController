@@ -1,0 +1,5 @@
+#!/bin/bash
+
+mkdir -p bin
+javac -cp lib/jna-4.0.0.jar -d bin src/com/dje/itg/api/*.java
+javac -cp bin -d bin src/com/dje/itg/controller/*.java
