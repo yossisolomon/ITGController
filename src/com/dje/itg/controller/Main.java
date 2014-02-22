@@ -62,7 +62,7 @@ public class Main {
 			while ((line = scriptReader.readLine()) != null) {
 				if (! line.contains("#")) { /* Ignore lines containing a # */
 					status = itgApi.sendCmd(sender, line);
-					if (status == ITGCatchMessage.SEND_SUCCESS)
+					if (status == ITGApi.SEND_SUCCESS)
 						successCmds++;
 				}
 			}

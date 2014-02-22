@@ -23,6 +23,11 @@ import com.sun.jna.ptr.PointerByReference;
 
 public class ITGApi {
 
+    /* Send status */
+    public final static int
+		SEND_SUCCESS = 0,
+		SEND_OTHER = -1;
+
     private ITGApiInterface apiInterface = ITGApiInterface.INSTANCE;
 
     public ITGApi() {

@@ -26,8 +26,6 @@ public class ITGCatchMessage {
 
 	/* Message types */
     public final static int
-		SEND_SUCCESS = 0,
-		SEND_OTHER = -1,
 		CATCH_START = 1,
 		CATCH_END = 2,
 		CATCH_NOMSG = -1;
