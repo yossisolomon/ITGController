@@ -1,0 +1,43 @@
+<project name="ITGController" default="build">
+  
+  <property name="src" location="src" />
+  <property name="lib" location="lib" />
+  <property name="jna" location="${lib}/jna-4.0.0.jar" />
+  <property name="bin" location="bin" />
+  <property name="Main" value="com.dje.itg.controller.Main" />
+  <property name="jar" location="ITGController.jar" />
+
+  <target name="setup">
+    <mkdir dir="${bin}" />
+  </target>
+
+  <target name="compile" depends="setup">
+    <javac includeantruntime="false" classpath="${jna}" srcdir="${src}/com/dje/itg/api" destdir="${bin}" />
+    <javac includeantruntime="false" classpath="${bin}" srcdir="${src}/com/dje/itg/controller" destdir="${bin}" />
+  </target>
+
+  <target name="run" depends="compile">
+    <java classname="${Main}">
+      <classpath>
+	<pathelement location="${jna}" />
+	<pathelement path="${bin}" />
+      </classpath>
+    </java>
+  </target>
+
+  <target name="build" depends="compile">
+    <jar destfile="${jar}">
+      <fileset dir="${bin}" />
+      <fileset dir="${lib}" />
+      <manifest>
+	<attribute name="Main-Class" value="${Main}" />
+      </manifest>
+    </jar>
+  </target>
+
+  <target name="clean">
+    <delete dir="${bin}" />
+    <delete file="${jar}" />
+  </target>
+
+</project>

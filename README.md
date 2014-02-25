@@ -2,24 +2,20 @@
 ### A tool for remotely controlling ITGSend running in daemon mode
 Makes use of the D-ITG C++ API under Java using [JNA](https://github.com/twall/jna)
 
-### Build
-#### Prerequisites
-- Install JDK
+### Prerequisites
+- Install JDK & Ant
 - Compile [D-ITG](http://traffic.comics.unina.it/software/ITG/download.php)
 - Copy libITG.so to lib/
 
-#### Linux
-     ./build
-     
-#### Other
-See javac commands in *build*
+### Build
+     ant
 
 ### Run
-#### Linux
+#### UNIX
      ./ITGController <sender> <script>
 
 #### Other
-See java commands in *ITGController*
+     java -jar ITGController.jar <sender> <script>
 
 ### License
 GPL v3
