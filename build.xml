@@ -3,6 +3,7 @@
   <property name="src" location="src" />
   <property name="lib" location="lib" />
   <property name="jna" location="${lib}/jna-4.0.0.jar" />
+  <property name="itg" location="${lib}/ITGApi.jar" />
   <property name="bin" location="bin" />
   <property name="Main" value="com.dje.itg.controller.Main" />
   <property name="jar" location="ITGController.jar" />
@@ -11,17 +12,35 @@
     <mkdir dir="${bin}" />
   </target>
 
-  <target name="compile" depends="setup">
+  <target name="compile-api" depends="setup">
     <javac includeantruntime="false" classpath="${jna}" srcdir="${src}/com/dje/itg/api" destdir="${bin}" />
-    <javac includeantruntime="false" classpath="${bin}" srcdir="${src}/com/dje/itg/controller" destdir="${bin}" />
+  </target>
+
+  <target name="build-api" depends="compile-api">
+    <jar destfile="${itg}">
+      <fileset dir="${bin}">
+	<include name="**/api/*" />
+      </fileset>
+    </jar>
+  </target>
+
+  <target name="compile" depends="build-api">
+    <javac includeantruntime="false" srcdir="${src}/com/dje/itg/controller" destdir="${bin}">
+      <classpath>
+	<pathelement location="${jna}" />
+	<pathelement location="${itg}" />
+      </classpath>
+    </javac>
   </target>
 
   <target name="build" depends="compile">
     <jar destfile="${jar}">
-      <fileset dir="${bin}" />
+      <fileset dir="${bin}">
+	<include name="**/controller/*" />
+      </fileset>
       <manifest>
 	<attribute name="Main-Class" value="${Main}" />
-	<attribute name="Class-Path" value="${jna}" />
+	<attribute name="Class-Path" value="${jna} ${itg}" />
       </manifest>
     </jar>
   </target>
@@ -29,6 +48,7 @@
   <target name="clean">
     <delete dir="${bin}" />
     <delete file="${jar}" />
+    <delete file="${itg}" />
   </target>
 
 </project>
