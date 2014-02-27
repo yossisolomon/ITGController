@@ -31,6 +31,9 @@ public class ITGApi {
 	private ITGApiInterface apiInterface;
 
 	public ITGApi() {
+		System.setProperty("jna.library.path", "lib");
+		System.setProperty("jna.nosys", "true");
+		
 		apiInterface = ITGApiInterface.INSTANCE;
 	}
 

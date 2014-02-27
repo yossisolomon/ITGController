@@ -30,8 +30,8 @@ public class ITGCatchMessage {
 		CATCH_END = 2,
 		CATCH_NOMSG = -1;
 
-	public int type;
-	public String sender, message;
+	private int type;
+	private String sender, message;
 
 	public ITGCatchMessage(int type, PointerByReference senderPointerRef,
 			   PointerByReference messagePointerRef) {
@@ -45,6 +45,33 @@ public class ITGCatchMessage {
 		Pointer messagePointer = messagePointerRef.getValue();
 		if (messagePointer != null)
 			message = messagePointer.getString(0);
+	}
+	
+	/**
+	 * Get the message type
+	 * 
+	 * @return The type of message
+	 */
+	public int getType() {
+		return type;
+	}
+	
+	/**
+	 * Get the message sender
+	 * 
+	 * @return The sender of the message
+	 */
+	public String getSender() {
+		return sender;
+	}
+	
+	/**
+	 * Get the message contents
+	 * 
+	 * @return The content of the message
+	 */
+	public String getMessage() {
+		return message;
 	}
 
 	@Override

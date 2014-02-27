@@ -36,17 +36,19 @@ public class MessageReceiver extends Thread {
 	@Override
 	public void run() {
 		ITGCatchMessage message;
+		int messageType;
 
 		while (true) {
 			/* Attempt message retrieval */
 			message = itgApi.catchMsg();
+			messageType = message.getType();
 			
 			/* Print a valid message */
-			if (message.type != ITGCatchMessage.CATCH_NOMSG)
+			if (messageType != ITGCatchMessage.CATCH_NOMSG)
 				System.out.println(message);
 				
 			/* Increase count of end messages received */
-			if (message.type == ITGCatchMessage.CATCH_END)
+			if (messageType == ITGCatchMessage.CATCH_END)
 				messageRecvNum++;
 
 			/* Stop looping if informed of expected num of end messages
