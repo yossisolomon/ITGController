@@ -23,45 +23,45 @@ import com.sun.jna.ptr.PointerByReference;
 
 public class ITGApi {
 
-    /* Send status */
-    public final static int
+	/* Send status */
+	public final static int
 		SEND_SUCCESS = 0,
 		SEND_OTHER = -1;
 
-    private ITGApiInterface apiInterface = ITGApiInterface.INSTANCE;
+	private ITGApiInterface apiInterface;
 
-    public ITGApi() {
+	public ITGApi() {
 		apiInterface = ITGApiInterface.INSTANCE;
-    }
+	}
 
 	/**
-	 * Send an D-ITG command to a sender
-	 * 
-	 * @param sender	The IP address/hostname of the sender
-	 * @param command	The command the sender should run
-	 * 
-	 * @return 0	Command successfully sent
-	 * @return -1	Otherwise
-	 */
-    public int sendCmd(String sender, String command) {
+	* Send an D-ITG command to a sender
+	* 
+	* @param sender	The IP address/hostname of the sender
+	* @param command	The command the sender should run
+	* 
+	* @return 0	Command successfully sent
+	* @return -1	Otherwise
+	*/
+	public int sendCmd(String sender, String command) {
 		return apiInterface._Z8DITGsendPcS_(sender, command);
-    }
+	}
 
 	/**
-	 * Receive a message from the sender
-	 * 
-	 * This method is non-blocking. The type attribute of {@link ITGCatchMessage}
-	 * represents whether a message was actually received and if so what type of
-	 * message it is
-	 * 
-	 * @return An {@link ITGCatchMessage} object representing the message
-	 */
-    public ITGCatchMessage catchMsg() {
+	* Receive a message from the sender
+	* 
+	* This method is non-blocking. The type attribute of {@link ITGCatchMessage}
+	* represents whether a message was actually received and if so what type of
+	* message it is
+	* 
+	* @return An {@link ITGCatchMessage} object representing the message
+	*/
+	public ITGCatchMessage catchMsg() {
 		PointerByReference senderPointerRef = new PointerByReference(),
 			commandPointerRef = new PointerByReference();
 		int type = apiInterface._Z15catchManagerMsgPPcS0_(senderPointerRef, commandPointerRef);
 
 		return new ITGCatchMessage(type, senderPointerRef, commandPointerRef);
-    }
+	}
 
 }

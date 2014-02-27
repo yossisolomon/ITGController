@@ -25,15 +25,15 @@ import com.sun.jna.Pointer;
 public class ITGCatchMessage {
 
 	/* Message types */
-    public final static int
+	public final static int
 		CATCH_START = 1,
 		CATCH_END = 2,
 		CATCH_NOMSG = -1;
 
-    public int type;
-    public String sender, message;
+	public int type;
+	public String sender, message;
 
-    public ITGCatchMessage(int type, PointerByReference senderPointerRef,
+	public ITGCatchMessage(int type, PointerByReference senderPointerRef,
 			   PointerByReference messagePointerRef) {
 		this.type = type;
 
@@ -45,17 +45,17 @@ public class ITGCatchMessage {
 		Pointer messagePointer = messagePointerRef.getValue();
 		if (messagePointer != null)
 			message = messagePointer.getString(0);
-    }
+	}
 
-    @Override
-    public String toString() {
+	@Override
+	public String toString() {
 		String out = "[";
 
 		switch (type) {
 			case CATCH_START:
 				out += "Start";
 				break;
-	    
+		
 			case CATCH_END:
 				out += "End";
 				break;
@@ -63,6 +63,6 @@ public class ITGCatchMessage {
 
 		out += " message from " + sender + "] " + message;
 		return out;
-    }
+	}
 
 }

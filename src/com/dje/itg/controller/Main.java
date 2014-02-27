@@ -28,14 +28,14 @@ import com.dje.itg.api.ITGCatchMessage;
 import com.dje.itg.api.ITGApi;
 
 public class Main {
-    
-    private ITGApi itgApi;
-    private MessageReceiver messageReceiver;
-    
-    private String sender;
-    private File script;
+	
+	private ITGApi itgApi;
+	private MessageReceiver messageReceiver;
+	
+	private String sender;
+	private File script;
 
-    public Main(String sender, File script) {
+	public Main(String sender, File script) {
 		itgApi = new ITGApi();
 		this.sender = sender;
 		this.script = script;
@@ -45,12 +45,12 @@ public class Main {
 		messageReceiver.start();
 		
 		runScript();
-    }
-    
-    /**
-     * Parse and send commands to the sender from the provided script
-     */
-    private void runScript() {
+	}
+	
+	/**
+	 * Parse and send commands to the sender from the provided script
+	 */
+	private void runScript() {
 		int successCmds = 0;
 		
 		try {
@@ -76,21 +76,21 @@ public class Main {
 		/* Inform receiver of expected number of end messages */
 		messageReceiver.incrMessageSentNum(successCmds);
 	}
-    
-    /**
-     * Main method
-     */
-    public static void main(String[] args) {
+	
+	/**
+	 * Main method
+	 */
+	public static void main(String[] args) {
 		try {
 			new Main(args[0], new File(args[1]));
 		} catch (ArrayIndexOutOfBoundsException e) {
 			System.err.println("ITGController\n" +
 					   "-------------\n\n" + 
 					   "Arguments: <sender> <script>\n\n" +
-					   "<sender>    Host running ITGSend in daemon mode\n" +
-					   "<script>    Path to D-ITG script");
+					   "<sender>	Host running ITGSend in daemon mode\n" +
+					   "<script>	Path to D-ITG script");
 			System.exit(1);
 		}
 	}
-    
+	
 }

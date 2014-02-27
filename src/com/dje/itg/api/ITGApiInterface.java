@@ -24,11 +24,11 @@ import com.sun.jna.Native;
 import com.sun.jna.ptr.PointerByReference;
 
 public interface ITGApiInterface extends Library {
-    ITGApiInterface INSTANCE = (ITGApiInterface) Native.loadLibrary("ITG", ITGApiInterface.class);
-    
-    /* int DITGsend(char *sender, char *message) */
-    int _Z8DITGsendPcS_(String sender, String message);
-    
-    /* int catchManagerMsg(char **senderIP, char **msg) */
-    int _Z15catchManagerMsgPPcS0_(PointerByReference senderIP, PointerByReference msg);
+	ITGApiInterface INSTANCE = (ITGApiInterface) Native.loadLibrary("ITG", ITGApiInterface.class);
+	
+	/* int DITGsend(char *sender, char *message) */
+	int _Z8DITGsendPcS_(String sender, String message);
+	
+	/* int catchManagerMsg(char **senderIP, char **msg) */
+	int _Z15catchManagerMsgPPcS0_(PointerByReference senderIP, PointerByReference msg);
 }

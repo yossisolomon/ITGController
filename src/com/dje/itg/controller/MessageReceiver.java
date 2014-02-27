@@ -24,17 +24,17 @@ import com.dje.itg.api.ITGApi;
 
 public class MessageReceiver extends Thread {
 
-    private final static int CATCH_SLEEP = 1000;
-    
-    private ITGApi itgApi;
-    private int messageSentNum = -1, messageRecvNum;
+	private final static int CATCH_SLEEP = 1000;
+	
+	private ITGApi itgApi;
+	private int messageSentNum = -1, messageRecvNum;
 
-    public MessageReceiver(ITGApi itgApi) {
+	public MessageReceiver(ITGApi itgApi) {
 		this.itgApi = itgApi;
-    }
+	}
 
 	@Override
-    public void run() {
+	public void run() {
 		ITGCatchMessage message;
 
 		while (true) {
@@ -61,7 +61,7 @@ public class MessageReceiver extends Thread {
 
 		System.out.println("\nQuit");
 		System.exit(0);
-    }
+	}
 
 	/**
 	 * Increase the number of messages that have been sent
@@ -70,13 +70,13 @@ public class MessageReceiver extends Thread {
 	 * 
 	 * @param num The number of messages to increase count by
 	 */
-    public void incrMessageSentNum(int num) {
+	public void incrMessageSentNum(int num) {
 		/* Set to 0 if this is the first increase */
 		if (messageSentNum == -1);
 			messageSentNum = 0;
 		
 		messageSentNum += num;
 		System.out.println("Now expecting " + messageSentNum + " end message(s)");
-    }
+	}
 
 }
