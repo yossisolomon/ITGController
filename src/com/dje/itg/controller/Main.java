@@ -77,11 +77,8 @@ public class Main {
 		for (String command : commands) {
 			status = itgApi.sendCmd(sender, command);
 			if (status == ITGApi.SEND_SUCCESS)
-				successCmds++;
+				messageReceiver.incrMessageSentNum(++successCmds);
 		}
-		
-		/* Inform receiver of expected number of end messages */
-		messageReceiver.incrMessageSentNum(successCmds);
 	}
 	
 	/**
