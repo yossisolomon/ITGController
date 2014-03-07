@@ -4,11 +4,20 @@
   <property name="lib" location="lib" />
   <property name="jna" location="${lib}/jna-4.0.0.jar" />
   <property name="itg" location="${lib}/ITGApi.jar" />
+  <property name="itg_so" location="${lib}/libITG.so" />
   <property name="bin" location="bin" />
   <property name="Main" value="com.dje.itg.controller.Main" />
   <property name="jar" location="ITGController.jar" />
 
-  <target name="setup">
+  <target name="prereqs">
+    <condition property="prereqs_satisfied">
+      <available file="${itg_so}" />
+    </condition>
+
+    <fail message="${itg_so} not found" unless="prereqs_satisfied" />
+  </target>
+
+  <target name="setup" depends="prereqs">
     <mkdir dir="${bin}" />
   </target>
 
