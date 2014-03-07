@@ -23,6 +23,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.dje.itg.api.ITGCatchMessage;
 import com.dje.itg.api.ITGApi;
@@ -34,11 +36,13 @@ public class Main {
 	
 	private String sender;
 	private File script;
+	private List<String> commands = new ArrayList<String>();
 
 	public Main(String sender, File script) {
 		itgApi = new ITGApi();
 		this.sender = sender;
 		this.script = script;
+		commands = new ArrayList<String>();
 
 		/* Start the thread to receive response messages */
 		messageReceiver = new MessageReceiver(itgApi);
@@ -56,21 +60,24 @@ public class Main {
 		try {
 			BufferedReader scriptReader = new BufferedReader(new FileReader(script));
 			String line;
-			int status;
 			
 			/* Loop through script */
-			while ((line = scriptReader.readLine()) != null) {
-				if (! line.contains("#")) { /* Ignore lines containing a # */
-					status = itgApi.sendCmd(sender, line);
-					if (status == ITGApi.SEND_SUCCESS)
-						successCmds++;
-				}
-			}
+			while ((line = scriptReader.readLine()) != null)
+				if (! line.contains("#")) /* Ignore lines containing a # */
+					commands.add(line);
 			
-			scriptReader.close();
+			scriptReader.close();		
 		} catch (Exception e) {
 			System.err.println("Failed to read script " + script + "\n" + e);
 			System.exit(1);
+		}
+		
+		/* Send commands */
+		int status;
+		for (String command : commands) {
+			status = itgApi.sendCmd(sender, command);
+			if (status == ITGApi.SEND_SUCCESS)
+				successCmds++;
 		}
 		
 		/* Inform receiver of expected number of end messages */
