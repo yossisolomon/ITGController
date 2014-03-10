@@ -33,7 +33,7 @@ public class Config {
 	/* Regular expressions */
 	public final static String
 		HOST_BLOCK = "\\s*Host\\s+\\w+\\s+\\{\\s*",
-		ANY_WHITESPACE = "\\s*",
+		ANY_LEAD_WHITESPACE = "^\\s*",
 		END_HOST_BLOCK = "\\s*}\\s*";	
 	
 	private ITGApi itgApi;
@@ -68,10 +68,9 @@ public class Config {
 			List<String> commands = null;
 			
 			/* Loop through file */
-			while ((line = fileReader.readLine()) != null) {
-				line = stripLeadingWhitespace(line);
-					
-				if (! line.matches(ANY_WHITESPACE)) {
+			while ((line = fileReader.readLine()) != null) {					
+				if (! line.matches(ANY_LEAD_WHITESPACE)) {
+					line = line.replaceFirst(ANY_LEAD_WHITESPACE, "");
 				
 					if (line.matches(HOST_BLOCK)) {
 						if (commands != null)
@@ -113,24 +112,6 @@ public class Config {
 			System.err.println("Failed to read file " + file + "\n" + e);
 			System.exit(1);
 		}	
-	}
-	
-	/**
-	 * Strip any leading whitespace from a line
-	 * 
-	 * @param input The String to strip whitespace from
-	 * 
-	 * @return The input minus any leading whitespace
-	 */
-	private String stripLeadingWhitespace(String input) {
-		String[] stripLeadingWhitespace = input.split(ANY_WHITESPACE, 2);
-		
-		if (stripLeadingWhitespace.length == 1) /* Not whitespace found */
-			input = stripLeadingWhitespace[0];
-		else
-			input = stripLeadingWhitespace[1];
-			
-		return input;
 	}
 	
 	/**
