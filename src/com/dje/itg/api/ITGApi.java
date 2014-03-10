@@ -62,13 +62,13 @@ public class ITGApi {
 	* 
 	* @throws IOException If a message could not be received
 	*/
-	public ITGCatchMessage catchMsg() throws IOException {
+	public ITGMessage catchMsg() throws IOException {
 		byte[] buffer = new byte[PACKET_LENGTH];
 		
 		DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
 		socket.receive(packet);
 		
-		return new ITGCatchMessage(packet.getAddress(), buffer);
+		return new ITGMessage(packet.getAddress(), buffer);
 	}
 
 }

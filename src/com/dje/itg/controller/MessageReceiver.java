@@ -19,7 +19,7 @@
 
 package com.dje.itg.controller;
 
-import com.dje.itg.api.ITGCatchMessage;
+import com.dje.itg.api.ITGMessage;
 import com.dje.itg.api.ITGApi;
 
 public class MessageReceiver extends Thread {
@@ -33,7 +33,7 @@ public class MessageReceiver extends Thread {
 
 	@Override
 	public void run() {
-		ITGCatchMessage message;
+		ITGMessage message;
 		int messageType;
 
 		while (true) {
@@ -46,11 +46,11 @@ public class MessageReceiver extends Thread {
 				System.out.println(message);
 				
 				/* Increase count of start messages received */
-				if (messageType == ITGCatchMessage.CATCH_START)
+				if (messageType == ITGMessage.START_MSG)
 					startMessageRecvNum++;
 				
 				/* Increase count of end messages received */
-				if (messageType == ITGCatchMessage.CATCH_END)
+				if (messageType == ITGMessage.END_MSG)
 					endMessageRecvNum++;
 					
 				/* Confirm commands started if informed of expected num of start messages

@@ -21,12 +21,12 @@ package com.dje.itg.api;
 
 import java.net.InetAddress;
 
-public class ITGCatchMessage {
+public class ITGMessage {
 
 	/* Message types */
 	public final static int
-		CATCH_START = 1,
-		CATCH_END = 2;
+		START_MSG = 1,
+		END_MSG = 2;
 		
 	/* Byte offsets for message buffer */
 	public final static int
@@ -37,7 +37,7 @@ public class ITGCatchMessage {
 	private int type;
 	private String sender, message;
 
-	public ITGCatchMessage(InetAddress sender, byte[] buffer) {
+	public ITGMessage(InetAddress sender, byte[] buffer) {
 		this.type = buffer[MSG_TYPE_OFFSET];
 		this.sender = sender.getHostName();
 		this.message = new String(buffer, MSG_OFFSET, buffer[MSG_LENGTH_OFFSET]);
@@ -75,11 +75,11 @@ public class ITGCatchMessage {
 		String out = "[";
 
 		switch (type) {
-			case CATCH_START:
+			case START_MSG:
 				out += "Start";
 				break;
 		
-			case CATCH_END:
+			case END_MSG:
 				out += "End";
 				break;
 		}
