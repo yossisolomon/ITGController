@@ -19,40 +19,34 @@
 
 package com.dje.itg.controller;
 
-import java.io.File;
+import java.util.List;
+import java.util.HashMap;
 
-import com.dje.itg.api.ITGCatchMessage;
 import com.dje.itg.api.ITGApi;
 
-public class Main {
-	
+public class ConfigRunner {
+
+	private ITGApi itgApi;
+	private Config config;
 	private MessageReceiver messageReceiver;
-
-	public Main(File file) {
-		ITGApi itgApi = new ITGApi();
-
-		/* Start the thread to receive response messages */
-		messageReceiver = new MessageReceiver(itgApi);
-		messageReceiver.start();
-		
-		Config config = new Config(file, itgApi);
-		
-		ConfigRunner configRunner = new ConfigRunner(config, messageReceiver, itgApi);
-		configRunner.run();
-	}
 	
-	/**
-	 * Main method
-	 */
-	public static void main(String[] args) {
-		try {
-			new Main(new File(args[0]));
-		} catch (ArrayIndexOutOfBoundsException e) {
-			System.err.println("ITGController\n" +
-					   "-------------\n\n" + 
-					   "Arguments: <script>\n\n" +
-					   "<script>	Path to D-ITG script");
-			System.exit(1);
+	public ConfigRunner(Config config,MessageReceiver messageReceiver, ITGApi itgApi) {
+		this.config = config;
+		this.itgApi = itgApi;
+		this.messageReceiver = messageReceiver;
+	}
+
+	public void run() {
+		HashMap<String, List<String>> hostCommandsMap = config.getHostCommandsMap();
+		
+		int status, successCmds = 0;
+		for (String sender : hostCommandsMap.keySet()) {
+			List<String> commands = hostCommandsMap.get(sender);
+			for (String command : commands) {
+				status = itgApi.sendCmd(sender, command);
+				if (status == ITGApi.SEND_SUCCESS)
+					messageReceiver.incrMessageSentNum(++successCmds);
+			}
 		}
 	}
 	
