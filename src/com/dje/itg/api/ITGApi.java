@@ -19,52 +19,56 @@
 
 package com.dje.itg.api;
 
-import com.sun.jna.ptr.PointerByReference;
+import java.net.DatagramSocket;
+import java.net.DatagramPacket;
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 public class ITGApi {
 
-	/* Send status */
 	public final static int
-		SEND_SUCCESS = 0,
-		SEND_OTHER = -1;
+		CONTROL_PORT = 8998,
+		PACKET_LENGTH = 300; /* Same as official C++ API */
 
-	private ITGApiInterface apiInterface;
+	private DatagramSocket socket;
 
-	public ITGApi() {
-		System.setProperty("jna.library.path", "lib");
-		System.setProperty("jna.nosys", "true");
-		
-		apiInterface = ITGApiInterface.INSTANCE;
+	public ITGApi() throws IOException {
+		socket = new DatagramSocket();
 	}
 
 	/**
 	* Send an D-ITG command to a sender
 	* 
-	* @param sender	The IP address/hostname of the sender
+	* @param sender		The IP address/hostname of the sender
 	* @param command	The command the sender should run
 	* 
-	* @return 0	Command successfully sent
-	* @return -1	Otherwise
+	* @throws UnknownHostException If senderHost could not be resolved
+	* @throws IOException If the command could not be sent
 	*/
-	public int sendCmd(String sender, String command) {
-		return apiInterface._Z8DITGsendPcS_(sender, command);
+	public void sendCmd(String senderHost, String command) throws UnknownHostException, IOException {
+		InetAddress sender = InetAddress.getByName(senderHost);
+		
+		DatagramPacket packet = new DatagramPacket(command.getBytes(), command.length(), sender, CONTROL_PORT);
+		socket.send(packet);
 	}
 
 	/**
 	* Receive a message from the sender
 	* 
-	* This method is non-blocking. The type attribute of {@link ITGCatchMessage}
-	* represents whether a message was actually received and if so what type of
-	* message it is
+	* This method is blocking
 	* 
 	* @return An {@link ITGCatchMessage} object representing the message
+	* 
+	* @throws IOException If a message could not be received
 	*/
-	public ITGCatchMessage catchMsg() {
-		PointerByReference senderPointerRef = new PointerByReference(),
-			commandPointerRef = new PointerByReference();
-		int type = apiInterface._Z15catchManagerMsgPPcS0_(senderPointerRef, commandPointerRef);
-
-		return new ITGCatchMessage(type, senderPointerRef, commandPointerRef);
+	public ITGCatchMessage catchMsg() throws IOException {
+		byte[] buffer = new byte[PACKET_LENGTH];
+		
+		DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
+		socket.receive(packet);
+		
+		return new ITGCatchMessage(packet.getAddress(), buffer);
 	}
 
 }

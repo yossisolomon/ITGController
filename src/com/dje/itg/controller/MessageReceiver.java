@@ -23,11 +23,9 @@ import com.dje.itg.api.ITGCatchMessage;
 import com.dje.itg.api.ITGApi;
 
 public class MessageReceiver extends Thread {
-
-	private final static int CATCH_SLEEP = 1000;
 	
 	private ITGApi itgApi;
-	private int messageSentNum = -1, messageRecvNum;
+	private int messageSentNum = -1, endMessageRecvNum, startMessageRecvNum;
 
 	public MessageReceiver(ITGApi itgApi) {
 		this.itgApi = itgApi;
@@ -40,28 +38,39 @@ public class MessageReceiver extends Thread {
 
 		while (true) {
 			/* Attempt message retrieval */
-			message = itgApi.catchMsg();
-			messageType = message.getType();
+			try {
+				message = itgApi.catchMsg();
+				messageType = message.getType();
 			
-			/* Print a valid message */
-			if (messageType != ITGCatchMessage.CATCH_NOMSG)
+				/* Print message */
 				System.out.println(message);
 				
-			/* Increase count of end messages received */
-			if (messageType == ITGCatchMessage.CATCH_END)
-				messageRecvNum++;
+				/* Increase count of start messages received */
+				if (messageType == ITGCatchMessage.CATCH_START)
+					startMessageRecvNum++;
+				
+				/* Increase count of end messages received */
+				if (messageType == ITGCatchMessage.CATCH_END)
+					endMessageRecvNum++;
+					
+				/* Confirm commands started if informed of expected num of start messages
+				* and we have received the expected num of start messages */
+				if (messageSentNum != -1 && startMessageRecvNum == messageSentNum) {
+					System.out.println("All commands started");
+					startMessageRecvNum = -1;
+				}
 
-			/* Stop looping if informed of expected num of end messages
-			 * and we have received the expected num of end messages */
-			if (messageSentNum != -1 && messageRecvNum == messageSentNum)
-				break;
-
-			try {
-				Thread.sleep(CATCH_SLEEP);
-			} catch (Exception e) {}
+				/* Stop looping if informed of expected num of end messages
+				* and we have received the expected num of end messages */
+				if (messageSentNum != -1 && endMessageRecvNum == messageSentNum)
+					break;
+			} catch (Exception e) {
+				System.err.println("Failed to catch message");
+				System.exit(1);
+			}
 		}
 
-		System.out.println("\nQuit");
+		System.out.println("All commands ended");
 		System.exit(0);
 	}
 
@@ -78,7 +87,7 @@ public class MessageReceiver extends Thread {
 			messageSentNum = 0;
 		
 		messageSentNum += num;
-		System.out.println("Now expecting " + messageSentNum + " end message(s)");
+		//System.out.println("Now expecting " + messageSentNum + " end message(s)");
 	}
 
 }

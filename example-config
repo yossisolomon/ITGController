@@ -1,0 +1,3 @@
+Host localhost {
+	-a localhost -rp 10000 VoIP
+}

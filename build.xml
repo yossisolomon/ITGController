@@ -2,27 +2,18 @@
   
   <property name="src" location="src" />
   <property name="lib" location="lib" />
-  <property name="jna" location="${lib}/jna-4.0.0.jar" />
   <property name="itg" location="${lib}/ITGApi.jar" />
-  <property name="itg_so" location="${lib}/libITG.so" />
   <property name="bin" location="bin" />
   <property name="Main" value="com.dje.itg.controller.Main" />
   <property name="jar" location="ITGController.jar" />
 
-  <target name="prereqs">
-    <condition property="prereqs_satisfied">
-      <available file="${itg_so}" />
-    </condition>
-
-    <fail message="${itg_so} not found" unless="prereqs_satisfied" />
-  </target>
-
-  <target name="setup" depends="prereqs">
+  <target name="setup">
     <mkdir dir="${bin}" />
+    <mkdir dir="${lib}" />
   </target>
 
   <target name="compile-api" depends="setup">
-    <javac includeantruntime="false" classpath="${jna}" srcdir="${src}/com/dje/itg/api" destdir="${bin}" />
+    <javac includeantruntime="false" srcdir="${src}/com/dje/itg/api" destdir="${bin}" />
   </target>
 
   <target name="build-api" depends="compile-api">
@@ -36,7 +27,6 @@
   <target name="compile" depends="build-api">
     <javac includeantruntime="false" srcdir="${src}/com/dje/itg/controller" destdir="${bin}">
       <classpath>
-	<pathelement location="${jna}" />
 	<pathelement location="${itg}" />
       </classpath>
     </javac>
@@ -49,15 +39,15 @@
       </fileset>
       <manifest>
 	<attribute name="Main-Class" value="${Main}" />
-	<attribute name="Class-Path" value="${jna} ${itg}" />
+	<attribute name="Class-Path" value="${itg}" />
       </manifest>
     </jar>
   </target>
 
   <target name="clean">
     <delete dir="${bin}" />
+    <delete dir="${lib}" />
     <delete file="${jar}" />
-    <delete file="${itg}" />
   </target>
 
 </project>

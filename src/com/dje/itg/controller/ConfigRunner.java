@@ -36,16 +36,22 @@ public class ConfigRunner {
 		this.messageReceiver = messageReceiver;
 	}
 
+	/**
+	 * Run commands from the config
+	 */
 	public void run() {
 		HashMap<String, List<String>> hostCommandsMap = config.getHostCommandsMap();
 		
-		int status, successCmds = 0;
+		int successCmds = 0;
 		for (String sender : hostCommandsMap.keySet()) {
 			List<String> commands = hostCommandsMap.get(sender);
 			for (String command : commands) {
-				status = itgApi.sendCmd(sender, command);
-				if (status == ITGApi.SEND_SUCCESS)
+				try {
+					itgApi.sendCmd(sender, command);
 					messageReceiver.incrMessageSentNum(++successCmds);
+				} catch (Exception e) {
+					System.err.println("[Send failure to " + sender + "]" + command);
+				}
 			}
 		}
 	}

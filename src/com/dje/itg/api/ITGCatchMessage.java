@@ -19,32 +19,28 @@
 
 package com.dje.itg.api;
 
-import com.sun.jna.ptr.PointerByReference;
-import com.sun.jna.Pointer;
+import java.net.InetAddress;
 
 public class ITGCatchMessage {
 
 	/* Message types */
 	public final static int
 		CATCH_START = 1,
-		CATCH_END = 2,
-		CATCH_NOMSG = -1;
+		CATCH_END = 2;
+		
+	/* Byte offsets for message buffer */
+	public final static int
+		MSG_TYPE_OFFSET	= 0,
+		MSG_LENGTH_OFFSET = 4,
+		MSG_OFFSET = 8;
 
 	private int type;
 	private String sender, message;
 
-	public ITGCatchMessage(int type, PointerByReference senderPointerRef,
-			   PointerByReference messagePointerRef) {
-		this.type = type;
-
-		/* Attempt to retrieve sender and message content */
-		Pointer senderPointer = senderPointerRef.getValue();
-		if (senderPointer != null)
-			sender = senderPointer.getString(0);
-
-		Pointer messagePointer = messagePointerRef.getValue();
-		if (messagePointer != null)
-			message = messagePointer.getString(0);
+	public ITGCatchMessage(InetAddress sender, byte[] buffer) {
+		this.type = buffer[MSG_TYPE_OFFSET];
+		this.sender = sender.getHostName();
+		this.message = new String(buffer, MSG_OFFSET, buffer[MSG_LENGTH_OFFSET]);
 	}
 	
 	/**

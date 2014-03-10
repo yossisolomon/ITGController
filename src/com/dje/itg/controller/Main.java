@@ -29,14 +29,22 @@ public class Main {
 	private MessageReceiver messageReceiver;
 
 	public Main(File file) {
-		ITGApi itgApi = new ITGApi();
+		ITGApi itgApi = null;
+		try {
+			itgApi = new ITGApi();
+		} catch (Exception e) {
+			System.err.println("Failed to load API");
+			System.exit(1);
+		}
 
 		/* Start the thread to receive response messages */
 		messageReceiver = new MessageReceiver(itgApi);
 		messageReceiver.start();
 		
+		/* Load the config */
 		Config config = new Config(file, itgApi);
 		
+		/* Run the config */
 		ConfigRunner configRunner = new ConfigRunner(config, messageReceiver, itgApi);
 		configRunner.run();
 	}

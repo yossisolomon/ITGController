@@ -30,6 +30,7 @@ import com.dje.itg.api.ITGApi;
 
 public class Config {
 	
+	/* Regular expressions */
 	public final static String
 		HOST_BLOCK = "\\s*Host\\s+\\w+\\s+\\{\\s*",
 		ANY_WHITESPACE = "\\s*",
@@ -47,10 +48,18 @@ public class Config {
 		parseFile();
 	}
 	
+	/**
+	 * Retrieve the map of sender to commands for that sender
+	 * 
+	 * @return The HashMap of sender to a list of commands
+	 */
 	public HashMap<String, List<String>> getHostCommandsMap() {
 		return hostCommandsMap;
 	}
 	
+	/**
+	 * Parse the config file
+	 */
 	private void parseFile() {
 		try {
 			BufferedReader fileReader = new BufferedReader(new FileReader(file));
@@ -106,10 +115,17 @@ public class Config {
 		}	
 	}
 	
+	/**
+	 * Strip any leading whitespace from a line
+	 * 
+	 * @param input The String to strip whitespace from
+	 * 
+	 * @return The input minus any leading whitespace
+	 */
 	private String stripLeadingWhitespace(String input) {
 		String[] stripLeadingWhitespace = input.split(ANY_WHITESPACE, 2);
 		
-		if (stripLeadingWhitespace.length == 1)
+		if (stripLeadingWhitespace.length == 1) /* Not whitespace found */
 			input = stripLeadingWhitespace[0];
 		else
 			input = stripLeadingWhitespace[1];
@@ -117,6 +133,13 @@ public class Config {
 		return input;
 	}
 	
+	/**
+	 * Parse a Host block line to get the sender address/host
+	 * 
+	 * @param input The Host block line to parse
+	 * 
+	 * @return The sender address/host name
+	 */
 	public String getHostBlockName(String input) {
 		String out = input.split("\\s*Host\\s+")[1];
 		out = out.split("\\s+")[0];	
