@@ -21,7 +21,6 @@ package com.dje.itg.controller;
 
 import java.io.File;
 
-import com.dje.itg.api.ITGCatchMessage;
 import com.dje.itg.api.ITGApi;
 
 public class Main {
