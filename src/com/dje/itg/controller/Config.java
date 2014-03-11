@@ -32,7 +32,7 @@ public class Config {
 	
 	/* Regular expressions */
 	public final static String
-		HOST_BLOCK = "\\s*Host\\s+\\w+\\s+\\{\\s*",
+		HOST_BLOCK = "\\s*Host\\s+[a-zA-Z.\\-0-9]+\\s+\\{\\s*",
 		ANY_LEAD_WHITESPACE = "^\\s*",
 		END_HOST_BLOCK = "\\s*}\\s*";	
 	
