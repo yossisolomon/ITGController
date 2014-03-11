@@ -56,7 +56,7 @@ public class MessageReceiver extends Thread {
 				/* Confirm commands started if informed of expected num of start messages
 				* and we have received the expected num of start messages */
 				if (messageSentNum != -1 && startMessageRecvNum == messageSentNum) {
-					System.out.println("All commands started");
+					System.out.println("All sent commands started");
 					startMessageRecvNum = -1;
 				}
 
@@ -70,7 +70,7 @@ public class MessageReceiver extends Thread {
 			}
 		}
 
-		System.out.println("All commands ended");
+		System.out.println("All sent commands ended");
 		System.exit(0);
 	}
 

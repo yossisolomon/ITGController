@@ -50,7 +50,7 @@ public class ConfigRunner {
 					itgApi.sendCmd(sender, command);
 					messageReceiver.incrMessageSentNum(++successCmds);
 				} catch (Exception e) {
-					System.err.println("[Send failure to " + sender + "]" + command);
+					System.err.println("[Send failure to " + sender + "] " + command);
 				}
 			}
 		}
