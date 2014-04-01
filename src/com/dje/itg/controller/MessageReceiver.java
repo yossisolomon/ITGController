@@ -70,6 +70,8 @@ public class MessageReceiver extends Thread {
 			}
 		}
 
+		itgApi.close();
+
 		System.out.println("All sent commands ended");
 		System.exit(0);
 	}
