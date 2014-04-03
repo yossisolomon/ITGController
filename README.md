@@ -1,6 +1,5 @@
 ## ITGController
 ### A tool for remotely controlling ITGSend running in daemon mode
-Implements the D-ITG API in Java
 
 ### Prerequisites
 - Install JDK & Ant
@@ -15,8 +14,11 @@ Implements the D-ITG API in Java
 #### Other
      java -jar ITGController.jar <script>
 
+### Script syntax
+See *example-script*
+
 ### API
-lib/ITGApi.jar is the Java implementation of the D-ITG C++ API and is portable to other projects
+Uses a [Java implementation](https://github.com/duncanje/j-itgapi) of the D-ITG C++ API
 
 ### License
 GPL v3
