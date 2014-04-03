@@ -18,7 +18,7 @@
 See *example-script*
 
 ### API
-Uses a [Java implementation](https://github.com/duncanje/j-itgapi) of the D-ITG C++ API
+Uses a [Java implementation](https://github.com/duncanje/jitgapi) of the D-ITG C++ API
 
 ### License
 GPL v3
