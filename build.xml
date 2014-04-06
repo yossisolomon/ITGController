@@ -1,39 +1,39 @@
 <project name="ITGController" default="build">
-  
-  <property name="api_version" value="0.1" />
-  
-  <property name="src" location="src" />
-  <property name="lib" location="lib" />
-  <property name="itg" location="${lib}/JITGApi-${api_version}.jar" />
-  <property name="bin" location="bin" />
-  <property name="Main" value="com.dje.itg.controller.Main" />
-  <property name="jar" location="ITGController.jar" />
 
-  <target name="setup">
-    <mkdir dir="${bin}" />
-  </target>
+	<property name="api_version" value="0.1" />
 
-  <target name="compile" depends="setup">
-    <javac includeantruntime="false" srcdir="${src}/com/dje/itg/controller" destdir="${bin}">
-      <classpath>
-	<pathelement location="${itg}" />
-      </classpath>
-    </javac>
-  </target>
+	<property name="src" location="src" />
+	<property name="lib" location="lib" />
+	<property name="itg" location="${lib}/JITGApi-${api_version}.jar" />
+	<property name="bin" location="bin" />
+	<property name="Main" value="com.dje.itg.controller.Main" />
+	<property name="jar" location="ITGController.jar" />
 
-  <target name="build" depends="compile">
-    <jar destfile="${jar}">
-      <fileset dir="${bin}" />
-      <manifest>
-	<attribute name="Main-Class" value="${Main}" />
-	<attribute name="Class-Path" value="${itg}" />
-      </manifest>
-    </jar>
-  </target>
+	<target name="setup">
+		<mkdir dir="${bin}" />
+	</target>
 
-  <target name="clean">
-    <delete dir="${bin}" />
-    <delete file="${jar}" />
-  </target>
+	<target name="compile" depends="setup">
+		<javac includeantruntime="false" srcdir="${src}/com/dje/itg/controller" destdir="${bin}">
+			<classpath>
+				<pathelement location="${itg}" />
+			</classpath>
+		</javac>
+	</target>
+
+	<target name="build" depends="compile">
+		<jar destfile="${jar}">
+			<fileset dir="${bin}" />
+			<zipgroupfileset dir="${lib}" />
+			<manifest>
+				<attribute name="Main-Class" value="${Main}" />
+			</manifest>
+		</jar>
+	</target>
+
+	<target name="clean">
+		<delete dir="${bin}" />
+		<delete file="${jar}" />
+	</target>
 
 </project>
