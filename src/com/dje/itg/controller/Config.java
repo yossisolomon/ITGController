@@ -34,7 +34,7 @@ public class Config {
 	public final static String
 		HOST_BLOCK = "\\s*Host\\s+[a-zA-Z.\\-0-9]+\\s+\\{\\s*",
 		ANY_LEAD_WHITESPACE = "^\\s*",
-		END_HOST_BLOCK = "\\s*}\\s*";	
+		END_HOST_BLOCK = "\\s*}\\s*";
 	
 	private ITGApi itgApi;
 	private File file;
@@ -68,7 +68,7 @@ public class Config {
 			List<String> commands = null;
 			
 			/* Loop through file */
-			while ((line = fileReader.readLine()) != null) {					
+			while ((line = fileReader.readLine()) != null) {
 				if (! line.matches(ANY_LEAD_WHITESPACE)) {
 					line = line.replaceFirst(ANY_LEAD_WHITESPACE, "");
 				
@@ -99,8 +99,8 @@ public class Config {
 						}
 					}
 					
-					lineNum++;
 				}
+				lineNum++;
 			}
 			
 			fileReader.close();
