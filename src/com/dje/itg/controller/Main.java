@@ -57,8 +57,8 @@ public class Main {
 		} catch (ArrayIndexOutOfBoundsException e) {
 			System.err.println("ITGController\n" +
 					   "-------------\n\n" + 
-					   "Arguments: <script>\n\n" +
-					   "<script>	Path to D-ITG script");
+					   "Arguments: <config>\n\n" +
+					   "<config>	Path to configuration");
 			System.exit(1);
 		}
 	}

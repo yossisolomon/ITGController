@@ -9,16 +9,16 @@
 
 ### Run
 #### UNIX
-     ./ITGController <script>
+     ./ITGController <config>
 
 #### Other
-     java -jar ITGController.jar <script>
+     java -jar ITGController.jar <config>
 
-### Script syntax
-See *example-script*
+### Config syntax
+See *example-config*
 
 ### API
-Uses a [Java implementation](https://github.com/duncanje/jitgapi) of the D-ITG C++ API
+Uses a Java implementation of the D-ITG C++ API - [JITGApi](https://github.com/duncanje/jitgapi)
 
 ### License
 GPL v3
