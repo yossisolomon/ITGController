@@ -42,17 +42,19 @@ public class ConfigRunner {
 	public void run() {
 		HashMap<String, List<String>> hostCommandsMap = config.getHostCommandsMap();
 		
+		int successCmds = 0;
 		for (String sender : hostCommandsMap.keySet()) {
 			List<String> commands = hostCommandsMap.get(sender);
 			for (String command : commands) {
 				try {
 					itgApi.sendCmd(sender, command);
-					messageReceiver.incrMessageSentNum(1);
+					successCmds++;
 				} catch (Exception e) {
 					System.err.println("[Send failure to " + sender + "] " + command);
 				}
 			}
 		}
+		messageReceiver.incrMessageSentNum(successCmds);
 	}
 	
 }
