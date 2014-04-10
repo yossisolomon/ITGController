@@ -85,11 +85,10 @@ public class MessageReceiver extends Thread {
 	 */
 	public void incrMessageSentNum(int num) {
 		/* Set to 0 if this is the first increase */
-		if (messageSentNum == -1);
+		if (messageSentNum == -1)
 			messageSentNum = 0;
 		
 		messageSentNum += num;
-		//System.out.println("Now expecting " + messageSentNum + " end message(s)");
 	}
 
 }
