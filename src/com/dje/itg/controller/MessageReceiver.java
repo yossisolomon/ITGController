@@ -34,7 +34,7 @@ public class MessageReceiver extends Thread {
 	@Override
 	public void run() {
 		ITGMessage message;
-		int messageType;
+		ITGMessage.Type messageType;
 
 		while (true) {
 			/* Attempt message retrieval */
@@ -46,11 +46,11 @@ public class MessageReceiver extends Thread {
 				System.out.println(message);
 				
 				/* Increase count of start messages received */
-				if (messageType == ITGMessage.START_MSG)
+				if (messageType == ITGMessage.Type.GEN_START)
 					startMessageRecvNum++;
 				
 				/* Increase count of end messages received */
-				if (messageType == ITGMessage.END_MSG)
+				if (messageType == ITGMessage.Type.GEN_END)
 					endMessageRecvNum++;
 					
 				/* Confirm commands started if informed of expected num of start messages
