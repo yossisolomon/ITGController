@@ -54,7 +54,7 @@ public class ConfigRunner {
 				}
 			}
 			
-			/* Inform receiver of amount of successful command sent */
+			/* Inform receiver of amount of successful commands sent */
 			messageReceiver.incrMessageSentNum(successCommands);
 		}
 	};
