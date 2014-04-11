@@ -22,8 +22,8 @@ package com.dje.itg.controller;
 import java.io.File;
 import java.io.FileReader;
 import java.io.BufferedReader;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Set;
 import java.util.HashMap;
 
 import com.dje.itg.api.ITGApi;
@@ -38,12 +38,12 @@ public class Config {
 	
 	private ITGApi itgApi;
 	private File file;
-	private HashMap<String, List<String>> hostCommandsMap;
+	private HashMap<String, Set<String>> hostCommandsMap;
 	
 	public Config(File file, ITGApi itgApi) {
 		this.file = file;
 		this.itgApi = itgApi;
-		hostCommandsMap = new HashMap<String, List<String>>();
+		hostCommandsMap = new HashMap<String, Set<String>>();
 		
 		parseFile();
 	}
@@ -53,7 +53,7 @@ public class Config {
 	 * 
 	 * @return The HashMap of sender to a list of commands
 	 */
-	public HashMap<String, List<String>> getHostCommandsMap() {
+	public HashMap<String, Set<String>> getHostCommandsMap() {
 		return hostCommandsMap;
 	}
 	
@@ -65,7 +65,7 @@ public class Config {
 			BufferedReader fileReader = new BufferedReader(new FileReader(file));
 			int lineNum = 1, cmdNum = 0;
 			String line, sender = null;
-			List<String> commands = null;
+			Set<String> commands = null;
 			
 			/* Loop through file */
 			while ((line = fileReader.readLine()) != null) {
@@ -79,7 +79,7 @@ public class Config {
 						sender = getHostBlockName(line);
 						
 						if ((commands = hostCommandsMap.get(sender)) == null) {
-							commands = new ArrayList<String>();
+							commands = new LinkedHashSet<String>();
 							hostCommandsMap.put(sender, commands);
 						}
 					}

@@ -19,7 +19,7 @@
 
 package com.dje.itg.controller;
 
-import java.util.List;
+import java.util.Set;
 import java.util.HashMap;
 
 import com.dje.itg.api.ITGApi;
@@ -33,9 +33,9 @@ public class ConfigRunner {
 	/* Send commands for a single host */
 	private class HostCommandRunner implements Runnable {
 		private String sender;
-		private List<String> commands;
+		private Set<String> commands;
 
-		public HostCommandRunner(String sender, List<String> commands) {
+		public HostCommandRunner(String sender, Set<String> commands) {
 			this.sender = sender;
 			this.commands = commands;
 		}
@@ -69,11 +69,11 @@ public class ConfigRunner {
 	 * Run commands from the config
 	 */
 	public void run() {
-		HashMap<String, List<String>> hostCommandsMap = config.getHostCommandsMap();
+		HashMap<String, Set<String>> hostCommandsMap = config.getHostCommandsMap();
 		
 		/* Send commands for each sender in a new thread */
 		for (String sender : hostCommandsMap.keySet()) {
-			List<String> commands = hostCommandsMap.get(sender);
+			Set<String> commands = hostCommandsMap.get(sender);
 			new Thread(new HostCommandRunner(sender, commands)).start();
 		}
 	}
