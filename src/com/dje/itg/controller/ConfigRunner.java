@@ -30,7 +30,36 @@ public class ConfigRunner {
 	private Config config;
 	private MessageReceiver messageReceiver;
 	
-	public ConfigRunner(Config config,MessageReceiver messageReceiver, ITGApi itgApi) {
+	/* Send commands for a single host */
+	private class HostCommandRunner implements Runnable {
+		private String sender;
+		private List<String> commands;
+
+		public HostCommandRunner(String sender, List<String> commands) {
+			this.sender = sender;
+			this.commands = commands;
+		}
+
+		@Override
+		public void run() {
+			int successCommands = 0;
+			
+			/* Send all commands to the sender */
+			for (String command : commands) {
+				try {
+					itgApi.sendCmd(sender, command);
+					successCommands++;
+				} catch (Exception e) {
+					System.err.println("[Send failure to " + sender + "] " + command);
+				}
+			}
+			
+			/* Inform receiver of amount of successful command sent */
+			messageReceiver.incrMessageSentNum(successCommands);
+		}
+	};
+
+	public ConfigRunner(Config config, MessageReceiver messageReceiver, ITGApi itgApi) {
 		this.config = config;
 		this.itgApi = itgApi;
 		this.messageReceiver = messageReceiver;
@@ -42,19 +71,11 @@ public class ConfigRunner {
 	public void run() {
 		HashMap<String, List<String>> hostCommandsMap = config.getHostCommandsMap();
 		
-		int successCmds = 0;
+		/* Send commands for each sender in a new thread */
 		for (String sender : hostCommandsMap.keySet()) {
 			List<String> commands = hostCommandsMap.get(sender);
-			for (String command : commands) {
-				try {
-					itgApi.sendCmd(sender, command);
-					successCmds++;
-				} catch (Exception e) {
-					System.err.println("[Send failure to " + sender + "] " + command);
-				}
-			}
+			new Thread(new HostCommandRunner(sender, commands)).start();
 		}
-		messageReceiver.incrMessageSentNum(successCmds);
 	}
 	
 }

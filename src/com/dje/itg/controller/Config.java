@@ -109,7 +109,7 @@ public class Config {
 				throw new ParserException("No commands loaded");
 				
 		} catch (Exception e) {
-			System.err.println("Failed to read file " + file + "\n" + e);
+			System.err.println("Failed to read config " + file + "\n" + e);
 			System.exit(1);
 		}	
 	}
