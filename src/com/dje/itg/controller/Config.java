@@ -94,7 +94,10 @@ public class Config {
 							throw new ParserException(lineNum, "Not found in Host block:\n" + line);
 						}
 						else {
-							commands.add(line);
+							if (! commands.add(line)) {
+								System.err.println("Duplicate command ignored: " +
+									line + " <Line " + lineNum + ">");
+							}
 							cmdNum++;
 						}
 					}
