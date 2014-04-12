@@ -25,7 +25,11 @@ import com.dje.itg.api.ITGApi;
 public class MessageReceiver extends Thread {
 	
 	private ITGApi itgApi;
-	private int messageSentNum = -1, endMessageRecvNum, startMessageRecvNum;
+	
+	private int
+		messageSentNum = -1,
+		endMessageRecvNum,
+		startMessageRecvNum;
 
 	public MessageReceiver(ITGApi itgApi) {
 		this.itgApi = itgApi;

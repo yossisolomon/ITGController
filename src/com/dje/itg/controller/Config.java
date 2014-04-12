@@ -124,7 +124,7 @@ public class Config {
 	 * 
 	 * @return The sender address/host name
 	 */
-	public String getHostBlockName(String input) {
+	private String getHostBlockName(String input) {
 		String out = input.split("\\s*Host\\s+")[1];
 		out = out.split("\\s+")[0];	
 		
