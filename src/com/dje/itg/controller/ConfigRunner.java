@@ -31,7 +31,7 @@ public class ConfigRunner {
 	private MessageReceiver messageReceiver;
 	
 	/* Send commands for a single host */
-	private class HostCommandRunner implements Runnable {
+	private class HostCommandRunner extends Thread {
 		private String sender;
 		private Set<String> commands;
 
@@ -55,7 +55,9 @@ public class ConfigRunner {
 			}
 			
 			/* Inform receiver of amount of successful commands sent */
-			messageReceiver.incrMessageSentNum(successCommands);
+			synchronized (messageReceiver) {
+				messageReceiver.incrMessageSentNum(successCommands);
+			}
 		}
 	};
 
@@ -74,7 +76,7 @@ public class ConfigRunner {
 		/* Send commands for each sender in a new thread */
 		for (String sender : hostCommandsMap.keySet()) {
 			Set<String> commands = hostCommandsMap.get(sender);
-			new Thread(new HostCommandRunner(sender, commands)).start();
+			new HostCommandRunner(sender, commands).start();
 		}
 	}
 	
