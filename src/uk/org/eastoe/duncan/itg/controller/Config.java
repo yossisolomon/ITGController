@@ -17,7 +17,7 @@
 *   along with ITGController.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package com.dje.itg.controller;
+package uk.org.eastoe.duncan.itg.controller;
 
 import java.io.File;
 import java.io.FileReader;

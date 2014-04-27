@@ -17,7 +17,7 @@
 *   along with ITGController.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package com.dje.itg.controller;
+package uk.org.eastoe.duncan.itg.controller;
 
 import com.dje.itg.api.ITGMessage;
 import com.dje.itg.api.ITGApi;
