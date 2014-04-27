@@ -19,8 +19,8 @@
 
 package uk.org.eastoe.duncan.itg.controller;
 
-import com.dje.itg.api.ITGMessage;
-import com.dje.itg.api.ITGApi;
+import uk.org.eastoe.duncan.itg.api.ITGMessage;
+import uk.org.eastoe.duncan.itg.api.ITGApi;
 
 public class MessageReceiver extends Thread {
 	

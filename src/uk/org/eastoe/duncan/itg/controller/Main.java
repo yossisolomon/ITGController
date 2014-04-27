@@ -21,7 +21,7 @@ package uk.org.eastoe.duncan.itg.controller;
 
 import java.io.File;
 
-import com.dje.itg.api.ITGApi;
+import uk.org.eastoe.duncan.itg.api.ITGApi;
 
 public class Main {
 	

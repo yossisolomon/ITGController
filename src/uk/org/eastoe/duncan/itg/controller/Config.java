@@ -26,7 +26,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.HashMap;
 
-import com.dje.itg.api.ITGApi;
+import uk.org.eastoe.duncan.itg.api.ITGApi;
 
 public class Config {
 	
