@@ -47,6 +47,7 @@ public class ConfigRunner {
 			/* Send all commands to the sender */
 			for (String command : commands) {
 				try {
+					System.out.println("Sending cmd \"" + command + "\" to " + sender);
 					itgApi.sendCmd(sender, command);
 					successCommands++;
 				} catch (Exception e) {
